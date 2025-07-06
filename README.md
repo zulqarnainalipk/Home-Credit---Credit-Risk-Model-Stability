@@ -1,65 +1,113 @@
+# Home Credit Risk Model Pipeline
 
-# 🏠 Home Credit  Risk Model Pipeline
+This repository contains a modularized and refactored version of the Home Credit Risk Model Pipeline, originally developed as a Jupyter notebook. The pipeline focuses on data preprocessing, feature engineering, and ensemble modeling to predict credit risk.
 
-Welcome to our advanced pipeline for building and assessing credit risk models using machine learning! 📊💳
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Setup and Installation](#setup-and-installation)
+- [Usage](#usage)
+- [Data](#data)
+- [Models](#models)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Overview 📝
-Discover a comprehensive approach to constructing credit risk models. We employ various machine learning algorithms like LightGBM and CatBoost, alongside ensemble techniques for robust predictions. Our pipeline emphasizes data integrity, feature relevance, and model stability, crucial elements in credit risk assessment. 🛠️💼
+## Overview
 
-## Features 🚀
-- **Data Preprocessing**: Begin with cleaning data, handling missing values, and optimizing memory usage for efficient computation.
-- **Feature Engineering**: Extract meaningful insights from data using advanced techniques, enhancing model predictive power.
-- **Model Training**: Train multiple machine learning models such as LightGBM and CatBoost to capture complex relationships and patterns.
-- **Ensemble Learning**: Combine predictions from various models using our custom Voting Model to achieve higher accuracy and stability. 🤝📈
+This project provides a comprehensive approach to building and assessing credit risk models. It leverages various machine learning algorithms, including LightGBM and CatBoost, combined with ensemble techniques for robust predictions. The pipeline emphasizes data integrity, feature relevance, and model stability, which are crucial elements in credit risk assessment.
 
-**🌟 Explore my profile and other public projects, and don't forget to share your feedback!**
+## Features
 
-## 👉 [Visit my Profile](https://www.kaggle.com/code/zulqarnainalipk) 👈
+- **Data Preprocessing**: Includes cleaning data, handling missing values, and optimizing memory usage for efficient computation.
+- **Feature Engineering**: Extracts meaningful insights from raw data using advanced techniques to enhance model predictive power.
+- **Model Training**: Supports training multiple machine learning models like LightGBM and CatBoost to capture complex relationships and patterns.
+- **Ensemble Learning**: Combines predictions from various models using a custom Voting Model to achieve higher accuracy and stability.
+- **Modular Design**: Code is organized into distinct modules for better maintainability and readability.
 
-## Requirements 🛠️
-Ensure you have:
-- Python 3.7+
-- Libraries: NumPy, pandas, polars, seaborn, matplotlib, scikit-learn, lightgbm, imbalanced-learn, joblib, catboost
--You can run it oon Kaggle for auto import of required datasets:[Kaggle]( https://www.kaggle.com/code/zulqarnainalipk/explained-home-credit-pipeline)
-## Usage 🚀
-Follow these steps:
-1. **Data Loading**: Ensure required datasets are available in the specified directory (`/kaggle/input/home-credit-credit-risk-model-stability`).
-2. **Initialization**: Run initialization code to set up necessary functions and configurations.
-3. **Data Preprocessing**: Execute data preprocessing steps to handle missing values and optimize memory usage.
-4. **Feature Engineering**: Use provided feature engineering functions to extract relevant features from the dataset.
-5. **Model Training**: Train machine learning models like LightGBM and CatBoost using preprocessed data.
-6. **Ensemble Learning**: Combine predictions from multiple models using the custom Voting Model for improved performance.
-7. **Evaluation**: Assess ensemble model performance and generate submission files for further analysis.
+## Project Structure
 
-## Note 📌
-- **Customization**: Feel free to customize the pipeline by adding or modifying features, adjusting model parameters, or experimenting with different algorithms.
-- **Resource Management**: Monitor memory usage and computational resources, especially during data preprocessing and model training, for smooth execution.
+```
+home-credit-risk-model/
+├── src/
+│   ├── __init__.py
+│   ├── data_preprocessing.py    # Contains data cleaning, type conversion, and filtering logic
+│   ├── feature_aggregation.py   # Handles feature aggregation from various data sources
+│   ├── data_loader.py           # Functions for reading single and multiple parquet files
+│   ├── feature_engineering.py   # Combines and engineers features from different data depths
+│   ├── utils.py                 # Utility functions like memory reduction and pandas conversion
+│   └── ensemble_model.py        # Custom VotingModel for ensemble predictions
+├── data/                        # Placeholder for raw and processed data (e.g., parquet files)
+├── models/                      # Placeholder for trained machine learning models
+├── notebooks/                   # Original Jupyter notebooks and exploratory analysis
+├── .gitignore                   # Specifies intentionally untracked files to ignore
+├── requirements.txt             # Lists project dependencies
+└── README.md                    # Project overview and documentation
+```
 
-## Acknowledgments 🙏
-We acknowledge The Home Credit Group organizers for providing the dataset and the competition platform.
+## Setup and Installation
 
-Let's dive in! Feel free to reach out if you have any questions or need assistance along the way. 👉 [Visit my Profile](https://www.kaggle.com/zulqarnainalipk) 👈
+To set up the project, follow these steps:
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/home-credit-risk-model.git
+    cd home-credit-risk-model
+    ```
+
+2.  **Create a virtual environment** (recommended):
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    ```
+
+3.  **Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Usage
+
+This project is designed to be run in two main modes: `train` and `predict`. The `main_pipeline.py` script orchestrates these processes.
+
+### Training Mode
+
+In training mode, the pipeline reads raw data, performs preprocessing and feature engineering, and prepares the data for model training. Model training itself is currently a placeholder and would typically involve a separate script or module that utilizes the processed data.
+
+To run the pipeline in training mode (data processing only):
+
+```bash
+python -c "from src.main_pipeline import run_pipeline; run_pipeline(mode=\'train\')"
+```
+
+*Note: The actual model training logic (e.g., `lgb.LGBMClassifier().fit(df_train, y)`) from the original notebook is commented out in `main_pipeline.py` and should be implemented in a dedicated training script within the `models/` directory or a separate training module.* 
+
+### Prediction Mode
+
+In prediction mode, the pipeline loads pre-trained models, processes new test data, and generates predictions. It also applies a post-processing step to adjust scores based on a defined condition.
+
+To run the pipeline in prediction mode:
+
+```bash
+python -c "from src.main_pipeline import run_pipeline; run_pipeline(mode=\'predict\')"
+```
+
+*Note: This mode requires the pre-trained models and `notebook_info.joblib` files to be available in the `/kaggle/input/homecredit-models-public/` directory, as referenced in the original notebook. For local execution, you would need to download these files and adjust the `ROOT` path in `main_pipeline.py` accordingly.*
+
+## Data
+
+The project expects data in Parquet format, organized in `parquet_files/train` and `parquet_files/test` directories within the `ROOT` path. The original notebook refers to data from a Kaggle competition. You will need to ensure your data is structured similarly or modify the `ROOT`, `TRAIN_DIR`, and `TEST_DIR` variables in `src/main_pipeline.py` to point to your data location.
+
+## Models
+
+Pre-trained LightGBM and CatBoost models are expected to be loaded from `joblib` files. The paths to these models are currently hardcoded to Kaggle input paths. For local development, you would need to download these models and update the paths in `src/main_pipeline.py`.
+
+## Contributing
+
+Contributions are welcome! Please feel free to open issues or submit pull requests.
+
+## License
+
+This project is open-source and available under the MIT License. See the `LICENSE` file for more details. (Note: A `LICENSE` file is not included in this refactoring, but it's good practice to add one.)
 
 
-
-
-
-
-
-## Keep Exploring! 👀
-
-Thank you for delving into this notebook! If you found it insightful or beneficial, I encourage you to explore more of my projects and contributions on my profile.
-
-👉 [Visit my Profile](https://www.kaggle.com/zulqarnainalipk) 👈
-
-[GitHub]( https://github.com/zulqarnainalipk) |
-[LinkedIn]( https://www.linkedin.com/in/zulqarnainalipk/)
-[Kaggle]( https://www.kaggle.com/code/zulqarnainalipk/explained-home-credit-pipeline)
-## Share Your Thoughts! 🙏
-
-Your feedback is invaluable! Your insights and suggestions drive our ongoing improvement. If you have any comments, questions, or ideas to contribute, please feel free to reach out.
-
-📬 Contact me via email: [zulqar445ali@gmail.com](mailto:zulqar445ali@gmail.com)
-
-I extend my sincere gratitude for your time and engagement. Your support inspires me to create even more valuable content.
-Happy coding and best of luck in your data science endeavors! 🚀
