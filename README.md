@@ -84,7 +84,7 @@ To set up the project locally, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/home-credit-risk-model.git
+   git clone https://github.com/zulqarnainalipk/Home-Credit---Credit-Risk-Model-Stability.git
    cd home-credit-risk-model
    ```
 
